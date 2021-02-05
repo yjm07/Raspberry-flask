@@ -47,6 +47,10 @@ def scan_wifi():
                 ssid = ch_ssid
 
         list[ssid] = info
+
+    #sorting by quality
+    list = dict(sorted(list.items(), reverse=True, key=lambda x: x[1][1]))
+    
     return list
 
 
