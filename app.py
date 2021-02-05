@@ -2,6 +2,8 @@ from flask import Flask
 from flask_socketio import SocketIO
 import wifi as scripts
 import handler as handlers
+import wifi_scan as wf
+import json
 
 
 app = Flask(__name__, static_url_path="", static_folder='templates')
@@ -34,7 +36,23 @@ def ssid_list():
 
 @app.route('/wifi0')
 def get_wifi_list():
-    return handlers.scan_candidate_wifi()
+    output = wf.scan_wifi()
+    list = dict()
+    for text in output.decode().split('--'):
+        line = text.split('\"')
+        info = line[0].split()
+        ssid = line[1]
+        #frequency float to int
+        info[0] = info[0].split('.')[0]
+
+        if ssid in list: continue
+        list[ssid] = info
+    print (list)
+
+    # dict to json
+    result = json.dumps(list)
+
+    return result
 
 
 def run(_debug=True):
