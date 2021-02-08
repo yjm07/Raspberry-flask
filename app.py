@@ -17,7 +17,7 @@ def get_wifi_list():
     list = wf.scan_wifi()
     
     # dict to json
-    result = json.dumps(list)
+    result = json.dumps(list, ensure_ascii = False)
 
     return result
 
@@ -28,3 +28,4 @@ def run():
 
 if __name__ == '__main__':
     run()
+    
