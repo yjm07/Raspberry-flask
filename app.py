@@ -14,10 +14,10 @@ def index():
 
 @app.route('/wifi')
 def get_wifi_list():
-    list = wf.scan_wifi()
+    _list = wf.scan_wifi()
     
     # dict to json
-    result = json.dumps(list, ensure_ascii = False)
+    result = json.dumps(_list, ensure_ascii = False)
 
     return result
 
@@ -28,4 +28,3 @@ def run():
 
 if __name__ == '__main__':
     run()
-    

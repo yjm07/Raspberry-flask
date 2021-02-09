@@ -9,14 +9,14 @@ def scan_wifi():
     stdout, stderr = proc.communicate()
     output = stdout.decode()
 
-    list = dict()
+    _list = dict()
     # if error
     if(stderr != b''):
-        list['error'] = stderr.decode()
-        return list
+        _list['error'] = stderr.decode()
+        return _list
 
     for text in output.split('--'):
-        line = text.split('\"', 1)
+        line = text.split('\"')
         info = line[0].split()
         ssid = line[1]
 
@@ -44,33 +44,33 @@ def scan_wifi():
         info[1] = info[1].split('=')[1].split('/')[0]
 
         # if same ssid, different frequency(2G, 5G)
-        if ssid in list and list[ssid][0] != info[0]:
+        if ssid in _list and _list[ssid][0] != info[0]:
             ch_ssid = ssid + '_5G'
-            if list[ssid][0] == '5':
-                list[ch_ssid] = list[ssid]
+            if _list[ssid][0] == '5':
+                _list[ch_ssid] = _list[ssid]
             elif info[0] == '5':
                 ssid = ch_ssid
 
-        list[ssid] = info
+        _list[ssid] = info
 
     # sorting by quality
-    list = dict(sorted(list.items(), reverse=True, key=lambda x: x[1][1]))
+    _list = dict(sorted(_list.items(), reverse=True, key=lambda x: x[1][1]))
     
-    return list
+    return _list
 
 
-def string_to_hex(str):
-    if len(str) != 4:
-        return str
-    elif str[:2] != '\\x':
-        return str
+def string_to_hex(_str):
+    if len(_str) != 4:
+        return _str
+    elif _str[:2] != '\\x':
+        return _str
     else:
-        f = char_to_hex(str[2])
-        s = char_to_hex(str[3])
+        f = char_to_hex(_str[2])
+        s = char_to_hex(_str[3])
         if f is not None and s is not None:
             return f*16+s
         else:
-            return str
+            return _str
 
 
 def char_to_hex(ch):
@@ -82,4 +82,3 @@ def char_to_hex(ch):
         return ord(ch)-55
     elif True:
         return None
-    
