@@ -1,5 +1,6 @@
 from flask import Flask
 import wifi_scan as wf
+import ble_scan as bl
 import json
 
 
@@ -18,6 +19,17 @@ def get_wifi_list():
     
     # dict to json
     result = json.dumps(_list, ensure_ascii = False)
+
+    return result
+
+
+@app.route('/ble')
+def get_ble_list():
+    _list = bl.scan_ble()
+
+    result = ''
+    for i in _list:
+        result += i + ' '
 
     return result
 

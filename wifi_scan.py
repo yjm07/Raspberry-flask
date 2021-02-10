@@ -30,7 +30,6 @@ def scan_wifi():
             for n in numbers:
                 sp = ssid.split(n, 1)
                 if sp[0] != '':
-                    print('in')
                     byte_string += sp[0].encode('utf-8')
                 ssid = sp[1]
                 # encoding word by word
