@@ -3,7 +3,7 @@
 <head>
    <meta charset="UTF-8">
    <title>Smart-AI dashboard</title>
-   <!-- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> -->
+   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
@@ -12,6 +12,13 @@
    <button id="button" class="" onclick="location.href='http://smart-ai.local:5000/wifi'">
       wifi lists
    </button>
+   <div class="dropdown">
+      <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+      <div id="myDropdown" class="dropdown-content">
+        <a href="/wifi">wifi lists</a>
+        <a href="#2">ble lists</a>
+      </div>
+   </div>
    <button id="button" class="" onclick="location.href='http://smart-ai.local:5000/ble'">
       ble lists
    </button>
