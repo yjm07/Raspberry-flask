@@ -1,5 +1,4 @@
 import subprocess
-import re
 
 
 def scan_ble():
@@ -12,7 +11,7 @@ def scan_ble():
     _list = set()
 
     # if error
-    if(stderr != b''):
+    if stderr != b'':
         _list.add(stderr.decode())
         return _list
 

@@ -1,16 +1,17 @@
-from flask import Flask
+from flask import Flask, render_template
 import wifi_scan as wf
+import connected_wifi as c_wf
 import ble_scan as bl
 import json
 
 
-app = Flask(__name__, static_url_path="", static_folder='templates')
+app = Flask(__name__, static_url_path="")
 
 
 @app.route('/')
 @app.route('/index')
 def index():
-    return app.send_static_file('index.html')
+    return render_template('index.html', data = c_wf.connected_wifi())
 
 
 @app.route('/wifi')
@@ -21,6 +22,13 @@ def get_wifi_list():
     result = json.dumps(_list, ensure_ascii = False)
 
     return result
+
+
+@app.route('/wifi_0')
+def show_connected_wifi():
+    _list = c_wf.connected_wifi()
+
+    return _list
 
 
 @app.route('/ble')
