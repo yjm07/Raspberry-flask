@@ -4,8 +4,8 @@ import re
 
 def scan_wifi():
 
-    proc = subprocess.Popen("sudo iwlist wlan0 scan | fgrep -B 3 ESSID | cut -d ':' -f 2 | awk '{print$1}'"
-    , shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    proc = subprocess.Popen("sudo iwlist wlan0 scan | fgrep -B 3 ESSID | cut -d ':' -f 2 | awk '{print$1}'", 
+                            shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = proc.communicate()
     output = stdout.decode()
 
@@ -26,16 +26,7 @@ def scan_wifi():
         # if character has unicode(UTF-8)
         numbers = re.findall('\\\\x[0-9a-fA-F][0-9a-fA-F]', ssid)
         if len(numbers) > 0:
-            byte_string = b''
-            for n in numbers:
-                sp = ssid.split(n, 1)
-                if sp[0] != '':
-                    byte_string += sp[0].encode('utf-8')
-                ssid = sp[1]
-                # encoding word by word
-                byte_string += string_to_hex(n).to_bytes(1, byteorder='big')
-            byte_string += ssid.encode('utf-8')
-            ssid = byte_string.decode()
+            ssid = utf8_to_str(ssid)
 
         # frequency parsing
         info[0] = info[0].split('.')[0]
@@ -56,6 +47,21 @@ def scan_wifi():
     _list = dict(sorted(_list.items(), reverse=True, key=lambda x: x[1][1]))
     
     return _list
+
+
+def utf8_to_str(ssid):
+    numbers = re.findall('\\\\x[0-9a-fA-F][0-9a-fA-F]', ssid)
+    byte_string = b''
+    for n in numbers:
+        sp = ssid.split(n, 1)
+        if sp[0] != '':
+            byte_string += sp[0].encode('utf-8')
+        ssid = sp[1]
+        # encoding word by word
+        byte_string += string_to_hex(n).to_bytes(1, byteorder='big')
+    byte_string += ssid.encode('utf-8')
+    ssid = byte_string.decode()
+    return ssid
 
 
 def string_to_hex(_str):

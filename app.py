@@ -11,7 +11,7 @@ app = Flask(__name__, static_url_path="")
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('index.html', data = c_wf.connected_wifi())
+    return render_template('index.html', wifi_info = c_wf.connected_wifi())
 
 
 @app.route('/wifi')
@@ -22,13 +22,6 @@ def get_wifi_list():
     result = json.dumps(_list, ensure_ascii = False)
 
     return result
-
-
-@app.route('/wifi_0')
-def show_connected_wifi():
-    _list = c_wf.connected_wifi()
-
-    return _list
 
 
 @app.route('/ble')
