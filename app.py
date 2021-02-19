@@ -1,16 +1,16 @@
-from flask import Flask
+from flask import Flask, render_template
 import wifi_scan as wf
 import ble_scan as bl
 import json
 
 
-app = Flask(__name__, static_url_path="", static_folder='templates')
+app = Flask(__name__, static_url_path="")
 
 
 @app.route('/')
 @app.route('/index')
 def index():
-    return app.send_static_file('index.html')
+    return render_template('index.html')
 
 
 @app.route('/wifi')
