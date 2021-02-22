@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 import wifi_scan as wf
+import connected_wifi as c_wf
 import ble_scan as bl
 import json
 
@@ -10,7 +11,7 @@ app = Flask(__name__, static_url_path="")
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', wifi_info = c_wf.connected_wifi())
 
 
 @app.route('/wifi')

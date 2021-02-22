@@ -11,7 +11,7 @@ def scan_wifi():
 
     _list = dict()
     # if error
-    if(stderr != b''):
+    if stderr != b'':
         _list['error'] = stderr.decode()
         return _list
 
