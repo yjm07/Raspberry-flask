@@ -16,8 +16,10 @@ def num_modi_in_usb():
     if len(output) == 0:
         return 0
 
-    _list = output.split("\n")
-    return len(_list) - 1
+    _list = output.rstrip('\n').split('\n')
+    return len(_list)
+
+
 
 
 def print_modi_list():
@@ -28,9 +30,16 @@ def print_modi_list():
     
     import modi
 
-    bundle_list = []
+    bundle_list = list()
     for i in range(num):
+        print(i)
         bundle = modi.MODI()
         bundles = bundle.modules
-        bundle_list.append(bundles)
+        for m in bundles:
+            if not m.is_up_to_date:
+                bundle_list.append((print(m), m.version))
     print (bundle_list)
+    
+    for b in range(num):
+        bundle.close()
+
