@@ -20,8 +20,6 @@ def num_modi_in_usb():
     return len(_list)
 
 
-
-
 def print_modi_list():
 
     num = num_modi_in_usb()
@@ -36,10 +34,45 @@ def print_modi_list():
         bundle = modi.MODI()
         bundles = bundle.modules
         for m in bundles:
-            if not m.is_up_to_date:
-                bundle_list.append((print(m), m.version))
+            if m.is_connected:
+                bundle_list.append((m.module_type, m.uuid, m.id, m.is_up_to_date))
     print (bundle_list)
-    
-    for b in range(num):
-        bundle.close()
 
+    bundle.close()
+
+    for m in bundle_list:
+        if not m[3]:
+            if m[0] == 'network':
+                modi.update_network_firmware()
+            else:    
+                modi.update_module_firmware(target_ids=(m[2], ))
+
+
+    
+#     # thread creation
+
+#     # run modi inside the thread
+
+#     # def thread_func(network_uuid):
+#     #     import modi
+#     #     b = modi.MODI(ble, network_uuid)
+#     # threading.Thread.run(target_func=thread_func, args=(network_uuid,),)
+
+#     # if error
+#     if stderr != b'':
+#         return stderr.decode()
+
+#     if len(output) == 0:
+#         return 0
+
+#     _list = output.rstrip('\n').split('\n')
+#     return len(_list)
+
+
+# def run():
+#     print(num_modi_in_usb())
+#     print_modi_list()
+
+
+# if __name__ == '__main__':
+#     run()
