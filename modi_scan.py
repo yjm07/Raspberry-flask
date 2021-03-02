@@ -44,9 +44,10 @@ def print_modi_list():
         if not m[3]:
             if m[0] == 'network':
                 modi.update_network_firmware()
-            else:    
+            else:
                 modi.update_module_firmware(target_ids=(m[2], ))
 
+    return bundle_list
 
     
 #     # thread creation
@@ -69,10 +70,5 @@ def print_modi_list():
 #     return len(_list)
 
 
-# def run():
-#     print(num_modi_in_usb())
-#     print_modi_list()
 
 
-# if __name__ == '__main__':
-#     run()

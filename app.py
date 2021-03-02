@@ -38,7 +38,12 @@ def get_ble_list():
 
 @app.route('/modi')
 def get_modi_list():
-    md.print_modi_list()
+    _list = md.print_modi_list()
+    
+    # dict to json
+    result = json.dumps(_list, ensure_ascii = False)
+
+    return result
 
 
 def run():
