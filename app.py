@@ -2,6 +2,7 @@ from flask import Flask, render_template
 import wifi_scan as wf
 import connected_wifi as c_wf
 import ble_scan as bl
+import modi_scan as md
 import json
 
 
@@ -31,6 +32,16 @@ def get_ble_list():
     result = ''
     for i in _list:
         result += i + ' '
+
+    return result
+
+
+@app.route('/modi')
+def get_modi_list():
+    _list = md.print_modi_list()
+    
+    # dict to json
+    result = json.dumps(_list, ensure_ascii = False)
 
     return result
 
